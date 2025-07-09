@@ -11,6 +11,7 @@ import { Loader2, Copy, Check, AlertCircle } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { useEffect, useState } from 'react';
 import { useToast } from "@/hooks/use-toast";
+import { AdBanner } from '@/components/AdBanner';
 
 const initialState = {
   shayari: undefined,
@@ -95,6 +96,7 @@ export default function Home() {
   return (
     <main className="min-h-screen w-full flex items-center justify-center p-4">
       <div className="w-full max-w-lg mx-auto">
+        <AdBanner />
         <Card className="bg-black/30 backdrop-blur-sm border-primary/20 shadow-2xl shadow-primary/10">
           <CardHeader className="text-center p-8">
             <h1 className="font-headline text-5xl lg:text-6xl font-bold text-white tracking-wider">ALFAAZ.AI</h1>
