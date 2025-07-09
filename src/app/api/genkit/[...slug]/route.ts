@@ -1,4 +1,4 @@
-import { genkitNextHandler } from '@genkit-ai/next';
+import { createNextHandler } from '@genkit-ai/next';
 import '@/ai/flows/generate-shayari';
 
-export const { GET, POST } = genkitNextHandler;
+export const { GET, POST } = createNextHandler();
