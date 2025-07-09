@@ -1,7 +1,7 @@
-// use server'
+'use server';
 
 /**
- * @fileOverview Generates a 4-line Shayari (poem) in Hindi/Urdu based on a user-selected category.
+ * @fileOverview Generates a 4-line Shayari (poem) in Hinglish based on a user-selected category.
  *
  * - generateShayari - A function that generates Shayari.
  * - GenerateShayariInput - The input type for the generateShayari function.
@@ -19,7 +19,7 @@ const GenerateShayariInputSchema = z.object({
 export type GenerateShayariInput = z.infer<typeof GenerateShayariInputSchema>;
 
 const GenerateShayariOutputSchema = z.object({
-  shayari: z.string().describe('The generated Shayari in Hindi/Urdu.'),
+  shayari: z.string().describe('The generated Shayari in Hinglish (Hindi and English mix).'),
 });
 export type GenerateShayariOutput = z.infer<typeof GenerateShayariOutputSchema>;
 
@@ -31,13 +31,7 @@ const prompt = ai.definePrompt({
   name: 'generateShayariPrompt',
   input: {schema: GenerateShayariInputSchema},
   output: {schema: GenerateShayariOutputSchema},
-  prompt: `You are an AI poet specializing in Hindi/Urdu Shayari.
-
-  Generate a 4-line Shayari based on the following category:
-
-  Category: {{{category}}}
-
-  The Shayari should evoke the emotion associated with the category.`,
+  prompt: `Ek {{{category}}} category ki shayari Hinglish (Hindi + English mix) mein likho. Shayari sirf 4 lines ki ho, thodi rhyme ho aur dil se nikli ho. Har line mein emotional ya attitude wala feel ho. Sirf shayari likho, bina kisi explanation ke.`,
 });
 
 const generateShayariFlow = ai.defineFlow(
