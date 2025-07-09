@@ -1,4 +1,2 @@
-import { config } from 'dotenv';
-config();
-
-import '@/ai/flows/generate-shayari.ts';
+// This file is intentionally left blank to resolve deployment issues.
+export {};

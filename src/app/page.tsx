@@ -1,96 +1,23 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useFormState, useFormStatus } from 'react-dom';
-import { handleGenerateShayari } from '@/app/actions';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardDescription } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
-import { Loader2, Copy, Check, AlertCircle } from 'lucide-react';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { useToast } from "@/hooks/use-toast";
 import { AdBanner } from '@/components/AdBanner';
 
-const initialState = {
-  shayari: undefined,
-  error: undefined,
-};
-
-function SubmitButton() {
-  const { pending } = useFormStatus();
-  return (
-    <Button type="submit" disabled={pending} size="lg" className="w-full text-lg font-semibold bg-primary hover:bg-primary/90 text-primary-foreground transition-all duration-300 transform hover:scale-105">
-      {pending ? <Loader2 className="mr-2 h-6 w-6 animate-spin" /> : null}
-      {pending ? 'Generating...' : 'Generate Alfaaz'}
-    </Button>
-  );
-}
-
-function ResultCard({ shayari }: { shayari: string }) {
-  const [isCopied, setIsCopied] = useState(false);
+export default function Home() {
   const { toast } = useToast();
 
-  useEffect(() => {
-    setIsCopied(false);
-  }, [shayari]);
-
-  const handleCopy = () => {
-    if (!navigator.clipboard) {
-        toast({
-            variant: "destructive",
-            title: "Browser not supported",
-            description: "Clipboard API is not available in your browser.",
-        });
-        return;
-    }
-    navigator.clipboard.writeText(shayari).then(() => {
-      setIsCopied(true);
-      toast({
-        title: "Copied to clipboard!",
-        description: "You can now paste the Shayari anywhere.",
-      });
-      setTimeout(() => setIsCopied(false), 3000);
-    }).catch(err => {
-      console.error('Failed to copy: ', err);
-      toast({
-        variant: "destructive",
-        title: "Copy failed",
-        description: "Could not copy text to clipboard.",
-      });
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    toast({
+      variant: "destructive",
+      title: "Feature Temporarily Disabled",
+      description: "The AI Shayari generation is currently unavailable. We are working on resolving deployment issues.",
     });
   };
-
-  if (!shayari) return null;
-
-  return (
-    <div className="mt-8 w-full animate-fade-in">
-        <Card className="bg-black/20 backdrop-blur-sm border-primary/20 w-full relative overflow-visible shadow-lg shadow-primary/10">
-          <CardContent className="p-8">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={handleCopy}
-              className="absolute -top-4 -right-4 h-10 w-10 bg-card rounded-full text-white/50 hover:text-white hover:bg-primary/80 transition-all duration-300"
-              aria-label="Copy Shayari"
-            >
-              {isCopied ? <Check className="h-5 w-5 text-green-400" /> : <Copy className="h-5 w-5" />}
-            </Button>
-            <blockquote className="text-center space-y-4">
-              {shayari.split('\n').map((line, index) => (
-                <p key={index} className="font-headline text-2xl lg:text-3xl text-white leading-relaxed">
-                  {line}
-                </p>
-              ))}
-            </blockquote>
-          </CardContent>
-        </Card>
-    </div>
-  );
-}
-
-export default function Home() {
-  const [state, formAction] = useFormState(handleGenerateShayari, initialState);
 
   return (
     <main className="min-h-screen w-full flex items-center justify-center p-4">
@@ -104,7 +31,7 @@ export default function Home() {
             </CardDescription>
           </CardHeader>
           <CardContent className="p-8 pt-0">
-            <form action={formAction} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-2">
                 <Label htmlFor="category" className="text-white/80 font-semibold text-base font-body">Choose a feeling</Label>
                 <Select name="category" defaultValue="Love" required>
@@ -120,20 +47,12 @@ export default function Home() {
                   </SelectContent>
                 </Select>
               </div>
-              <SubmitButton />
+              <Button type="submit" size="lg" className="w-full text-lg font-semibold bg-primary hover:bg-primary/90 text-primary-foreground transition-all duration-300 transform hover:scale-105">
+                Generate Alfaaz
+              </Button>
             </form>
-
-            {state.error && (
-              <Alert variant="destructive" className="mt-6 bg-red-900/50 border-red-500/50 text-white">
-                <AlertCircle className="h-4 w-4" />
-                <AlertTitle>Error</AlertTitle>
-                <AlertDescription>{state.error}</AlertDescription>
-              </Alert>
-            )}
           </CardContent>
         </Card>
-
-        {state.shayari && <ResultCard shayari={state.shayari} />}
       </div>
     </main>
   );

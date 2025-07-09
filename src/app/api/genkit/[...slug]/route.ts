@@ -1,4 +1,15 @@
-import { createNextHandler } from '@genkit-ai/next';
-import '@/ai/flows/generate-shayari';
+import {NextResponse} from 'next/server';
 
-export const { GET, POST } = createNextHandler();
+export async function GET() {
+  return NextResponse.json(
+    {error: 'AI features are temporarily disabled.'},
+    {status: 503}
+  );
+}
+
+export async function POST() {
+  return NextResponse.json(
+    {error: 'AI features are temporarily disabled.'},
+    {status: 503}
+  );
+}
