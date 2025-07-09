@@ -1,7 +1,6 @@
 'use client';
 
-import { useFormStatus } from 'react-dom';
-import { useActionState } from 'react';
+import { useFormState, useFormStatus } from 'react-dom';
 import { handleGenerateShayari } from '@/app/actions';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardDescription } from '@/components/ui/card';
@@ -91,7 +90,7 @@ function ResultCard({ shayari }: { shayari: string }) {
 }
 
 export default function Home() {
-  const [state, formAction] = useActionState(handleGenerateShayari, initialState);
+  const [state, formAction] = useFormState(handleGenerateShayari, initialState);
 
   return (
     <main className="min-h-screen w-full flex items-center justify-center p-4">
